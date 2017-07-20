@@ -1,0 +1,66 @@
+---
+# osinit.yml - init_ubuntu-1604
+  - name: Set timezone
+    command: timedatectl set-timezone Asia/Tokyo
+
+#  - name: Delete default ntp configuration
+#    command: sed -i -e "/ubuntu/d" /etc/ntp.conf
+
+#  - name: Modify ntp.conf
+#    lineinfile:
+#      dest=/etc/ntp.conf
+#      line="server 172.16.0.100"
+
+  - name: Modify ntp.conf
+    template:
+      src: files/ntp.conf.j2
+      dest: /etc/ntp.conf
+      backup: yes
+      mode: 0644
+
+  - name: Restart ntpd
+    service:
+      name: ntp
+      state: restarted
+      enabled: yes
+
+  - name: Add group
+    group:
+      name: "{{ group }}"
+      gid: "{{ gid }}"
+
+  - name: Add user
+    user:
+      name: "{{ user }}"
+      comment: "{{ comment }}"
+      uid: "{{ uid }}"
+      group: "{{ group }}"
+      shell: /bin/bash
+
+  - name: Set password to user
+    shell: echo "{{ user }}:{{ pass }}" | chpasswd
+
+  - name: Add user to sudo group
+    user:
+      name: "{{ user }}"
+      groups: sudo
+      append: yes
+
+  - name: Make swap file
+    command: dd if=/dev/zero of=/var/swap0 bs=1M count={{ swap }}
+
+  - name: Change permission of swap file
+    file:
+      path: /var/swap0
+      mode: 0600
+
+  - name: Make swap
+    command: mkswap /var/swap0
+
+  - name: Swap on
+    command: swapon /var/swap0
+
+  - name: Modify fstab file
+    lineinfile:
+      dest: /etc/fstab
+      line: /var/swap0 swap swap defaults 0 0"

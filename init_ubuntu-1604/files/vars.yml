@@ -1,0 +1,23 @@
+---
+# vars.yml - init_ubuntu-1604
+
+# Network
+hostname: osinit
+ip: 192.168.0.1
+
+# NTP
+ntp1:
+ntp2:
+
+# Group
+group:
+gid:
+
+# User
+user:
+uid:
+comment:
+pass:
+
+# Swap
+swap: 4096

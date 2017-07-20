@@ -1,0 +1,10 @@
+---
+# network.yml - init_ubuntu-1604
+  - name: Modify hosts file
+    lineinfile:
+      dest=/etc/hosts
+      line="{{ ip }}    {{ hostname }}"
+
+  - name: Set system's hostname
+    hostname:
+      name: "{{ hostname }}"

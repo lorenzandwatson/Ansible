@@ -1,0 +1,20 @@
+---
+# software.yml - init_ubuntu-1604
+  - name: Update repositories and install packages if it's not installed
+    apt: name={{ item }} state=present update_cache=yes
+    with_items:
+      - sysv-rc-conf
+      - ufw
+      - ntp
+      - sysstat
+      - nkf
+      - vnstat
+      - iotop
+
+  - name: Start services
+    service: name={{ item }} state=restarted enabled=yes
+    with_items:
+      - ufw
+      - ntp
+      - sysstat
+      - vnstat

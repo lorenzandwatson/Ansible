@@ -1,0 +1,11 @@
+---
+# main.yml - init_ubuntu-1604
+- hosts: localhost
+  become: yes
+  vars_files:
+    - files/vars.yml
+  tasks:
+    - include: network.yml
+    - include: software.yml
+    - include: osinit.yml
+#    - include: security.yml
