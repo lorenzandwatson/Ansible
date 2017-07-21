@@ -3,14 +3,6 @@
   - name: Set timezone
     command: timedatectl set-timezone Asia/Tokyo
 
-#  - name: Delete default ntp configuration
-#    command: sed -i -e "/ubuntu/d" /etc/ntp.conf
-
-#  - name: Modify ntp.conf
-#    lineinfile:
-#      dest=/etc/ntp.conf
-#      line="server 172.16.0.100"
-
   - name: Modify ntp.conf
     template:
       src: files/ntp.conf.j2
