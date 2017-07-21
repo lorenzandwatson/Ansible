@@ -1,6 +1,4 @@
 #!/bin/bash
-#route delete default
-#route add default gw 192.168.2.254 enp0s8
 function ErrChk()
 {
   PROC=${1}
